@@ -16,7 +16,6 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
   useEffect( ()=>{
     if( Object.keys(paciente).length > 0 ){
-      console.log( paciente );
       llenarFormulario();
     }
 
@@ -39,7 +38,6 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
     const random = Math.random().toString(36).substring(2);
     const fecha = Date.now().toString(36);
-    const id = random + fecha;
 
     return random + fecha; 
   }
@@ -50,11 +48,8 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
     e.preventDefault();
 
     // validación del Formulario
-
     if([ nombre, propietario, email, fecha, sintomas ].includes('')){
-      console.log('Hay almenos un campo vacio.');
       setError(true);
-
       return;
     }
 

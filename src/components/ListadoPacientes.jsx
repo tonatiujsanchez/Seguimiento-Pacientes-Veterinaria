@@ -13,7 +13,7 @@ const ListadoPacientes = ({ pacientes, setPaciente, eliminarPaciente }) => {
           Listado de Pacientes
         </h2>
         <p className="'text-lg text-center mb-10">
-          Arministra tus {''}
+          Administra tus {''}
           <span className='text-indigo-600 font-bold'>Pacientes y Citas</span>
         </p>
       </>
