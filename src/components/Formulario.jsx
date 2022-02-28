@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import AlertaError from './AlertaError';
 
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 
   const [ nombre, setNombre ] = useState('');
   const [ propietario, setPropietario ] = useState('');
@@ -11,6 +11,28 @@ const Formulario = ({ pacientes, setPacientes }) => {
   const [ sintomas, setSintomas ] = useState('');
 
   const [ error, setError ] = useState(false);
+
+  const [ edit, setEdit ] = useState( false );
+
+  useEffect( ()=>{
+    if( Object.keys(paciente).length > 0 ){
+      console.log( paciente );
+      llenarFormulario();
+    }
+
+  }, [paciente]);
+
+
+  const llenarFormulario = () => {
+    const { nombre, propietario, email, fecha, sintomas } = paciente;
+    setNombre( nombre );
+    setPropietario( propietario );
+    setEmail( email );
+    setFecha( fecha );
+    setSintomas( sintomas );
+
+    setEdit( true );
+  }
 
 
   const generarId = () => {
@@ -36,6 +58,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
       return;
     }
 
+
     setError(false);
 
 
@@ -46,16 +69,30 @@ const Formulario = ({ pacientes, setPacientes }) => {
       propietario,
       email,
       fecha,
-      sintomas,
-      id: generarId()
+      sintomas
     }
 
-    setPacientes( [ objetoPaciente, ...pacientes ] )
+    if( edit ){
+      objetoPaciente.id = paciente.id;
+      editarPaciente( objetoPaciente );
+    }else{
+      objetoPaciente.id = generarId();
+      setPacientes( [ objetoPaciente, ...pacientes ] );
+    }
+
+
     limpiarFormulario();
   }
 
 
+  const editarPaciente = ( objetoPaciente ) => {
 
+    const pacientesActualizados = pacientes.map( pacienteState => pacienteState.id === paciente.id ? objetoPaciente : pacienteState );
+
+    setPacientes( pacientesActualizados );
+    setPaciente({});
+    setEdit( false );
+  }
 
 
   const limpiarFormulario = () => {
@@ -79,7 +116,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
               className='bg-white shadow-md rounded-md py-10 px-5 mb-10 mx-3 md:sticky top-20'>
 
           {/* { error && <AlertaError mensaje = '¡Todos los campos son obligatorios!' /> } */}
-          { error && <AlertaError><p>¡Todos los campos son obligatorios con Children!</p></AlertaError> }
+          { error && <AlertaError><p>¡Todos los campos son obligatorios!</p></AlertaError> }
 
           <div className='mb-5'>
             <label htmlFor='nombreMascota' className='block text-gray-700 font-bold uppercase mb-2'>
@@ -153,7 +190,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
 
           <input 
             type="submit"
-            value="Agregar paciente"
+            value={ edit ? 'Guardar cambios': 'Agregar paciente' }
             className='bg-indigo-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-indigo-700 cursor-pointer transition-all'
            />
 
@@ -163,3 +200,4 @@ const Formulario = ({ pacientes, setPacientes }) => {
 }
 
 export default Formulario;
+

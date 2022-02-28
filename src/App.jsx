@@ -8,6 +8,13 @@ import ListadoPacientes from './components/ListadoPacientes';
  function App() {
 
   const [ pacientes, setPacientes ] = useState([]);
+  const [ paciente, setPaciente ] = useState({});
+
+
+  const eliminarPaciente = ( idPaciente ) => {
+    const pacientesActualizados = pacientes.filter( pacienteState => pacienteState.id !== idPaciente );
+    setPacientes( pacientesActualizados );
+  }
  
 
   return (
@@ -17,9 +24,13 @@ import ListadoPacientes from './components/ListadoPacientes';
         <Formulario
           pacientes = { pacientes }
           setPacientes = { setPacientes }
+          paciente = { paciente }
+          setPaciente = { setPaciente }
         />
         <ListadoPacientes 
         pacientes = { pacientes }
+        setPaciente = { setPaciente }
+        eliminarPaciente = { eliminarPaciente }
         />
       </div>
     </div>

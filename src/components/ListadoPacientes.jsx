@@ -1,9 +1,7 @@
-import Paciente from './Paciente'
+import Paciente from './Paciente';
 
-const ListadoPacientes = ({ pacientes }) => {
 
-  console.log( pacientes && pacientes.length );
-
+const ListadoPacientes = ({ pacientes, setPaciente, eliminarPaciente }) => {
 
 
   return (
@@ -37,7 +35,9 @@ const ListadoPacientes = ({ pacientes }) => {
 
            <Paciente 
               key={ paciente.id }
-              paciente = { paciente } 
+              paciente = { paciente }
+              setPaciente = { setPaciente }
+              eliminarPaciente = { eliminarPaciente } 
             /> 
         
         ))
