@@ -12,6 +12,18 @@ const Formulario = ({ pacientes, setPacientes }) => {
 
   const [ error, setError ] = useState(false);
 
+
+  const generarId = () => {
+
+    const random = Math.random().toString(36).substring(2);
+    const fecha = Date.now().toString(36);
+    const id = random + fecha;
+
+    return random + fecha; 
+  }
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -34,12 +46,17 @@ const Formulario = ({ pacientes, setPacientes }) => {
       propietario,
       email,
       fecha,
-      sintomas
+      sintomas,
+      id: generarId()
     }
 
     setPacientes( [ objetoPaciente, ...pacientes ] )
     limpiarFormulario();
   }
+
+
+
+
 
   const limpiarFormulario = () => {
     setNombre('');
@@ -61,7 +78,8 @@ const Formulario = ({ pacientes, setPacientes }) => {
         <form onSubmit={ handleSubmit }
               className='bg-white shadow-md rounded-md py-10 px-5 mb-10 mx-3 md:sticky top-20'>
 
-          { error && <AlertaError mensaje = '¡Todos los campos son obligatorios!' /> }
+          {/* { error && <AlertaError mensaje = '¡Todos los campos son obligatorios!' /> } */}
+          { error && <AlertaError><p>¡Todos los campos son obligatorios con Children!</p></AlertaError> }
 
           <div className='mb-5'>
             <label htmlFor='nombreMascota' className='block text-gray-700 font-bold uppercase mb-2'>
